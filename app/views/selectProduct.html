@@ -1,0 +1,20 @@
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-wrapper" ng-if="!publishing && !publishedDone">
+					<table ng-table="tableParams" show-filter="true" class="table">
+				        <tr ng-repeat="item in $data" >
+				            <td data-title="'Name'" filter="{ 'name': 'text' }">
+				                <span ng-if="item.isSelected" class="glyphicon glyphicon-ok"></span>
+				                <a href="#wizard">{{item.name}}</a>
+				            </td>
+				        </tr>
+				    </table>
+				</div>
+			    
+			</div>
+		</div>
+	</div>
+
+<!-- <p>Type something in filter and press <strong>Enter</strong> or <strong>Filter</strong> button</p>
+    <p><strong>Filter:</strong> {{tableParams.filter()|json}} -->

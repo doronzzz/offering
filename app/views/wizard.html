@@ -1,0 +1,88 @@
+	<div class="container">
+		<div class="btns-wrapper pull-right" ng-class="{'invisible':publishing}">
+			<div class="btn btn-primary  btn-sm"  ng-class="{'disabled':selectedPlans.length === 0}">
+				Save & Close
+			</div>
+			<div class="btn btn-default btn-sm" ng-click="cancel()">
+				Cancel
+			</div>
+			<div class="btn btn-primary  btn-sm" ng-class="{'disabled':selectedPlans.length === 0}" ng-click="publish()">
+				Publish
+			</div>
+			<div class="btn btn-default  btn-sm" ng-class="{'disabled':selectedPlans.length === 0}">
+				Test
+			</div>
+		</div>
+		 <alert ng-if="publishedDone" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		<div class="row clearfix clear-fix">
+			<div class="col-md-8">
+				
+				<div class="new-offering-placeholder" ng-if="selectedPlans.length === 0">
+					<div class="well">
+							
+							<h3>Choose a plan from the right</h3>
+							<div class="img glyphicon glyphicon-picture"></div>
+
+
+					</div>
+				</div>
+
+				<div ng-if="selectedPlans.length != 0 && !publishedDone" class="offering-plans">
+					
+					<div class="offering-selected-plans">
+						<div class="well-sm well" ng-repeat="plan in selectedPlans">
+							<div popover="{{plan.name}}" popover-trigger="mouseenter" popover-title="The title.">{{plan.name}}
+							 <span class="glyphicon glyphicon-remove pull-right" ng-click="removeSelectedPlan(plan)"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="offering-tags">
+						
+					</div>
+
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<div class="table-wrapper" ng-if="!publishing && !publishedDone">
+					<table ng-table="tableParams" show-filter="true" class="table">
+				        <tr ng-repeat="item in $data" ng-click="planClicked(item)">
+				            <td data-title="'Name'" filter="{ 'name': 'text' }">
+				                <span ng-if="item.isSelected" class="glyphicon glyphicon-ok"></span>
+				                {{item.name}}
+				            </td>
+				        </tr>
+				    </table>
+				</div>
+
+				<div class="publish-schedule" ng-if="publishing && !publishedDone">
+					<h5>Publish Offering</h5>
+					<div>when?</div>
+					<div class="btn-group">
+				        <label class="btn btn-success btn-sm" ng-model="radioModel" btn-radio="'Now'" uncheckable>
+				        	Now
+				        </label>
+				        <label class="btn btn-success btn-sm" ng-model="radioModel" btn-radio="'Schedule'" uncheckable>
+				        	Schedule
+				        </label>
+				    </div>
+
+				      <div style="display:inline-block; min-height:290px;" ng-if="radioModel === 'Schedule' ">
+					      <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
+					  </div>
+
+					  <!-- <pre>Selected date is: <em>{{dt}}</em></pre> -->
+
+				    <div class="ftr">
+				    	<div class="btn btn-primary btn-sm" ng-click="confirmPublish()">Publish</div>
+				    	<div class="btn btn-default btn-sm" ng-click="cancelPublish()">Cancel</div>
+				    </div>
+				</div>
+			    
+			</div>
+		</div>
+
+	</div>
+<!-- <p>Type something in filter and press <strong>Enter</strong> or <strong>Filter</strong> button</p>
+    <p><strong>Filter:</strong> {{tableParams.filter()|json}} -->
